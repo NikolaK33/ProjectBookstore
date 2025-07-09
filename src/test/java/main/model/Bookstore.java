@@ -62,6 +62,12 @@ public class Bookstore {
     }
 
     public void addBook(Book book) {
+        for (Book m : books){
+            if (m.getTitle().equals(book.getTitle()) && m.getAuthor().equals(book.getAuthor())){
+                m.setQuantity(m.getQuantity() + 1);
+                return;
+            }
+        }
         books.add(book);
     }
 
@@ -72,6 +78,21 @@ public class Bookstore {
             System.out.println("List of books: ");
             for (Book book : books){
                 System.out.println(book + "\n");
+            }
+        }
+    }
+
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+    }
+
+    public void displayEmployees() {
+        if (employees.isEmpty()) {
+            System.out.println("No employees available.");
+        } else {
+            System.out.println("List of employees:");
+            for (Employee employee : employees) {
+                System.out.println(employee + "\n");
             }
         }
     }

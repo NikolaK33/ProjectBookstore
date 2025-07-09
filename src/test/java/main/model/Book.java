@@ -7,13 +7,15 @@ public class Book {
     private int year;
     private double price;
     private String genre;
+    private int quantity;
 
-    public Book(String title, String author, int year, double price, String genre) {
+    public Book(String title, String author, int year, double price, String genre, int quantity) {
         this.title = title;
         this.author = author;
         this.year = year;
         this.price = price;
         this.genre = genre;
+        this.quantity = quantity;
     }
 
     public String getTitle() {
@@ -54,6 +56,14 @@ public class Book {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
