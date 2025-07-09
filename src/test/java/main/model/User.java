@@ -46,7 +46,7 @@ public class User {
         this.email = email;
     }
 
-    //Methods===================================
+    //Override===================================
 
     @Override
     public boolean equals(Object o) {
@@ -64,10 +64,10 @@ public class User {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User\n");
-        sb.append("name: ").append(name).append('\n');
-        sb.append(", username: ").append(username).append('\n');
-        sb.append(", password: ").append(password).append('\n');
-        sb.append(", email: ").append(email).append('\n');
+        sb.append("name: ").append(name).append("\n");
+        sb.append(", username: ").append(username).append("\n");
+        sb.append(", password: ").append(password).append("\n");
+        sb.append(", email: ").append(email).append("\n");
         return sb.toString();
     }
 }

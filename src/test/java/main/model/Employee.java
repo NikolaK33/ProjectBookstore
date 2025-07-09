@@ -46,7 +46,7 @@ public class Employee {
         this.position = position;
     }
 
-    //Methods========================================
+    //Override========================================
 
     @Override
     public boolean equals(Object o) {
@@ -64,10 +64,10 @@ public class Employee {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Employee\n");
-        sb.append("Name:").append(name).append('\n');
-        sb.append("ID: ").append(id).append('\n');
+        sb.append("Name:").append(name).append("\n");
+        sb.append("ID: ").append(id).append("\n");
         sb.append("Salary: ").append(salary);
-        sb.append("Position: ").append(position).append('\n');
+        sb.append("Position: ").append(position).append("\n");
         return sb.toString();
     }
 }

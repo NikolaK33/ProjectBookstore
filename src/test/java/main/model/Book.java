@@ -66,6 +66,8 @@ public class Book {
         this.quantity = quantity;
     }
 
+    //Overrides=======================================================
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,11 +84,11 @@ public class Book {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Book\n");
-        sb.append("Title: ").append(title).append('\n');
-        sb.append("Author: ").append(author).append('\n');
+        sb.append("Title: ").append(title).append("\n");
+        sb.append("Author: ").append(author).append("\n");
         sb.append("Year: ").append(year);
         sb.append("Price: ").append(price);
-        sb.append("Genre: ").append(genre).append('\n');
+        sb.append("Genre: ").append(genre).append("\n");
         return sb.toString();
     }
 }

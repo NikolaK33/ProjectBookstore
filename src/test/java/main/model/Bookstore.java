@@ -49,7 +49,7 @@ public class Bookstore {
         this.users = users;
     }
 
-    //Methods=================================
+    //Override===========================================
 
     @Override
     public String toString() {
@@ -60,6 +60,8 @@ public class Bookstore {
         sb.append("Number of users: ").append(users.size());
         return sb.toString();
     }
+
+    //Methods=============================================
 
     public void addBook(Book book) {
         for (Book m : books){
