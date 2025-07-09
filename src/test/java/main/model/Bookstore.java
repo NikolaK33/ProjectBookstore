@@ -61,4 +61,19 @@ public class Bookstore {
         return sb.toString();
     }
 
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void displayBooks(){
+        if (books.isEmpty()){
+            System.out.println("No books available.");
+        } else {
+            System.out.println("List of books: ");
+            for (Book book : books){
+                System.out.println(book + "\n");
+            }
+        }
+    }
+
 }
