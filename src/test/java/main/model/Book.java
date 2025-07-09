@@ -6,10 +6,10 @@ public class Book {
     private String author;
     private int year;
     private double price;
-    private String genre;
+    private BookGenre genre;
     private int quantity;
 
-    public Book(String title, String author, int year, double price, String genre, int quantity) {
+    public Book(String title, String author, int year, double price, BookGenre genre, int quantity) {
         this.title = title;
         this.author = author;
         this.year = year;
@@ -50,11 +50,11 @@ public class Book {
         this.price = price;
     }
 
-    public String getGenre() {
+    public BookGenre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(BookGenre genre) {
         this.genre = genre;
     }
 
