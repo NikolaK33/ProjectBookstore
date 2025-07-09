@@ -83,6 +83,12 @@ public class Bookstore {
     }
 
     public void addEmployee(Employee employee) {
+        for (Employee employee1 : employees){
+            if (employee1.equals(employee)){
+                System.out.println("Employee already exists");
+                return;
+            }
+        }
         employees.add(employee);
     }
 
@@ -96,5 +102,27 @@ public class Bookstore {
             }
         }
     }
+
+    public void addUser(User user) {
+        for (User user1 : users){
+            if (user1.equals(user)){
+                System.out.println("User already exists");
+                return;
+            }
+        }
+        users.add(user);
+    }
+
+    public void displayUsers() {
+        if (users.isEmpty()) {
+            System.out.println("No users available.");
+        } else {
+            System.out.println("List of users:");
+            for (User user : users) {
+                System.out.println(user + "\n");
+            }
+        }
+    }
+
 
 }
