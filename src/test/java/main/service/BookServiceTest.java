@@ -1,9 +1,8 @@
-package test.service;
+package main.service;
 
 import main.model.Book;
 import main.model.BookGenre;
 import main.model.Bookstore;
-import main.service.BookService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
