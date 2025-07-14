@@ -74,19 +74,11 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("Enter user name:");
-                    String name = scanner.nextLine();
-                    System.out.println("Enter username:");
-                    String username = scanner.nextLine();
-                    System.out.println("Enter password:");
-                    String password = scanner.nextLine();
-                    System.out.println("Enter email:");
-                    String email = scanner.nextLine();
-                    userService.addUser(new User(name, username, password, email));
+                    UserUI.addUserFromInput(bookstore);
                     break;
 
                 case 5:
-                    userService.displayUsers();
+                    UserUI.printAllUsers(bookstore);
                     break;
 
                 case 6:
