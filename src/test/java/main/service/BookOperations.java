@@ -1,6 +1,10 @@
 package main.service;
 
 import main.model.Book;
+import main.model.BookGenre;
+import main.model.Bookstore;
+
+import java.util.Scanner;
 
 public interface BookOperations {
 

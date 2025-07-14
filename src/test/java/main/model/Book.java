@@ -18,6 +18,14 @@ public class Book {
         this.quantity = quantity;
     }
 
+    public Book(String title, String author, double price, BookGenre genre) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        this.genre = genre;
+    }
+
+
     public String getTitle() {
         return title;
     }

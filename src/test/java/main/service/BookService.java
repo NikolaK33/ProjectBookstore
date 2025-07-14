@@ -15,7 +15,7 @@ public class BookService implements BookOperations{
 
     @Override
     public void addBook(Book book) {
-        bookstore.addBook(book);
+        LoggerService.log("Added book: " + book.getTitle() + " by " + book.getAuthor());
     }
 
     @Override
