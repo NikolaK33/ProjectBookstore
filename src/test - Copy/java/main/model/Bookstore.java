@@ -73,12 +73,6 @@ public class Bookstore {
         books.add(book);
     }
 
-    public void removeBook(String title, String author) {
-        books.removeIf(book ->
-                book.getTitle().equalsIgnoreCase(title) &&
-                        book.getAuthor().equalsIgnoreCase(author));
-    }
-
     public void displayBooks(){
         if (books.isEmpty()){
             System.out.println("No books available.");

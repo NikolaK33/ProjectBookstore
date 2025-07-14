@@ -1,8 +1,8 @@
 package main.app;
 
 import main.model.Bookstore;
-import main.model.BookGenre;
-import main.model.Book;
+import main.model.Employee;
+import main.model.User;
 import main.service.*;
 
 import java.util.Scanner;
@@ -50,6 +50,7 @@ public class Main {
 
                     System.out.println("Enter price:");
                     double price = scanner.nextDouble();
+
                     scanner.nextLine(); // flush
 
                     System.out.println("Enter genre:");
@@ -57,15 +58,9 @@ public class Main {
 
                     System.out.println("Enter quantity:");
                     int quantity = scanner.nextInt();
-                    scanner.nextLine(); // flush
 
-                    try {
-                        BookGenre genreEnum = BookGenre.valueOf(genre.toUpperCase());
-                        Book book = new Book(title, author, year, price, genreEnum, quantity);
-                        bookService.addBook(book);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Invalid genre! Please use values like FICTION, NONFICTION, etc.");
-                    }
+                    bookService.addBook(new main.model.Book(title, author, year, price,
+                            main.model.BookGenre.valueOf(genre.toUpperCase()), quantity));
                     break;
 
                 case 2:
@@ -93,11 +88,20 @@ public class Main {
                     break;
 
                 case 7:
-                    EmployeeUI.addEmployeeFromInput(bookstore);
+                    System.out.println("Enter employee name:");
+                    String empName = scanner.nextLine();
+                    System.out.println("Enter employee ID:");
+                    String empId = scanner.nextLine();
+                    System.out.println("Enter salary:");
+                    double salary = scanner.nextDouble();
+                    scanner.nextLine(); // flush
+                    System.out.println("Enter position:");
+                    String position = scanner.nextLine();
+                    employeeService.addEmployee(new Employee(empName, empId, salary, position));
                     break;
 
                 case 8:
-                    EmployeeUI.printAllEmployees(bookstore);
+                    employeeService.displayEmployees();
                     break;
 
                 case 9:
