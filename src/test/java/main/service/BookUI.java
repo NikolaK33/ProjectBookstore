@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 public class BookUI {
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -112,6 +114,17 @@ public class BookUI {
     }
 
     public static void purchaseBook(Bookstore bookstore) {
+        System.out.print("Enter your username: ");
+        String username = scanner.nextLine();
+
+        boolean userExists = bookstore.getUsers().stream()
+                .anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
+
+        if (!userExists) {
+            System.out.println("User not found. Please register first.");
+            return;
+        }
+
         System.out.print("Enter title of the book to purchase: ");
         String title = scanner.nextLine();
 
@@ -120,7 +133,9 @@ public class BookUI {
                 if (book.getQuantity() > 0) {
                     book.setQuantity(book.getQuantity() - 1);
                     System.out.println("Book purchased: " + book.getTitle());
-                    LoggerService.log("Book purchased: " + book.getTitle());
+
+                    LoggerService.log("Book purchased: " + book.getTitle() + " by " + username);
+                    PurchaseLogger.logPurchase(username, book.getTitle());
                 } else {
                     System.out.println("Sorry, the book is out of stock.");
                 }
@@ -129,5 +144,19 @@ public class BookUI {
         }
 
         System.out.println("Book not found.");
+    }
+
+    public static void showUserPurchaseHistory() {
+        System.out.print("Enter your username: ");
+        String username = scanner.nextLine();
+        PurchaseLogger.showPurchaseHistory(username);
+    }
+
+    public static void showTopSellingBooks() {
+        PurchaseLogger.showTopSellingBooks();
+    }
+
+    public static void showAllPurchases() {
+        PurchaseLogger.showAllPurchases();
     }
 }

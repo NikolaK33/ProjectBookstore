@@ -43,6 +43,9 @@ public class Main {
             System.out.println("10. Search books by author");
             System.out.println("11. Sort books");
             System.out.println("12. Purchase a book");
+            System.out.println("13. View purchase history");
+            System.out.println("14. View top-selling books");
+            System.out.println("15. View all purchases (admin)");
             System.out.println("0. Exit");
             System.out.print("Choose option: ");
 
@@ -128,6 +131,18 @@ public class Main {
 
                 case 12:
                     BookUI.purchaseBook(bookstore);
+                    break;
+
+                case 13:
+                    BookUI.showUserPurchaseHistory();
+                    break;
+
+                case 14:
+                    BookUI.showTopSellingBooks();
+                    break;
+
+                case 15:
+                    BookUI.showAllPurchases();
                     break;
 
                 case 0:
