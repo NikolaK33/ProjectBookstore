@@ -110,4 +110,24 @@ public class BookUI {
             System.out.println(book);
         }
     }
+
+    public static void purchaseBook(Bookstore bookstore) {
+        System.out.print("Enter title of the book to purchase: ");
+        String title = scanner.nextLine();
+
+        for (Book book : bookstore.getBooks()) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                if (book.getQuantity() > 0) {
+                    book.setQuantity(book.getQuantity() - 1);
+                    System.out.println("Book purchased: " + book.getTitle());
+                    LoggerService.log("Book purchased: " + book.getTitle());
+                } else {
+                    System.out.println("Sorry, the book is out of stock.");
+                }
+                return;
+            }
+        }
+
+        System.out.println("Book not found.");
+    }
 }

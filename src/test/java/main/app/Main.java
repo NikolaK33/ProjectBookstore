@@ -1,10 +1,14 @@
 package main.app;
 
+
 import main.model.Bookstore;
 import main.model.BookGenre;
 import main.model.Book;
 import main.service.*;
 import main.service.BookUI;
+import main.service.BookFileHandler;
+import main.service.UserFileHandler;
+import main.service.EmployeeFileHandler;
 
 import java.util.Scanner;
 
@@ -12,7 +16,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Bookstore bookstore = new Bookstore("Pametna Knjizara");
+        Bookstore bookstore = new Bookstore("Smart Bookstore");
+        bookstore.getBooks().addAll(BookFileHandler.loadBooks());
+        bookstore.getUsers().addAll(UserFileHandler.loadUsers());
+        bookstore.getEmployees().addAll(EmployeeFileHandler.loadEmployees());
+
 
         BookService bookService = new BookService(bookstore);
         UserService userService = new UserService(bookstore);
@@ -34,6 +42,7 @@ public class Main {
             System.out.println("9. Remove Employee");
             System.out.println("10. Search books by author");
             System.out.println("11. Sort books");
+            System.out.println("12. Purchase a book");
             System.out.println("0. Exit");
             System.out.print("Choose option: ");
 
@@ -117,6 +126,10 @@ public class Main {
                     BookUI.sortBooks(bookstore);
                     break;
 
+                case 12:
+                    BookUI.purchaseBook(bookstore);
+                    break;
+
                 case 0:
                     System.out.println("Goodbye!");
                     break;
@@ -126,6 +139,10 @@ public class Main {
             }
 
         } while (option != 0);
+
+        BookFileHandler.saveBooks(bookstore.getBooks());
+        UserFileHandler.saveUsers(bookstore.getUsers());
+        EmployeeFileHandler.saveEmployees(bookstore.getEmployees());
 
         scanner.close();
     }
