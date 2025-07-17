@@ -3,7 +3,8 @@ package main.service;
 import main.model.Book;
 import main.model.BookGenre;
 import main.model.Bookstore;
-
+import main.model.User;
+import main.app.Main;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -114,8 +115,13 @@ public class BookUI {
     }
 
     public static void purchaseBook(Bookstore bookstore) {
-        System.out.print("Enter your username: ");
-        String username = scanner.nextLine();
+        String username = Main.activeUser != null ? Main.activeUser.getUsername() : null;
+
+
+        if (username == null) {
+            System.out.println("You must log in first.");
+            return;
+        }
 
         boolean userExists = bookstore.getUsers().stream()
                 .anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
@@ -158,5 +164,69 @@ public class BookUI {
 
     public static void showAllPurchases() {
         PurchaseLogger.showAllPurchases();
+    }
+
+    public static void showUsersWhoPurchasedBook() {
+        System.out.print("Enter book title: ");
+        String title = scanner.nextLine();
+        PurchaseLogger.showUsersWhoPurchasedBook(title);
+    }
+
+    public static void purchaseMultipleBooks(Bookstore bookstore) {
+        String username = Main.activeUser != null ? Main.activeUser.getUsername() : null;
+
+        if (username == null) {
+            System.out.println("You must log in first.");
+            return;
+        }
+
+        List<String> requestedTitles = new ArrayList<>();
+
+        System.out.println("Enter book titles to purchase (one per line). Type 'done' to finish:");
+
+        while (true) {
+            String title = scanner.nextLine();
+            if (title.equalsIgnoreCase("done")) break;
+            requestedTitles.add(title);
+        }
+
+        List<String> successful = new ArrayList<>();
+        List<String> failed = new ArrayList<>();
+
+        for (String title : requestedTitles) {
+            boolean found = false;
+
+            for (Book book : bookstore.getBooks()) {
+                if (book.getTitle().equalsIgnoreCase(title)) {
+                    found = true;
+                    if (book.getQuantity() > 0) {
+                        book.setQuantity(book.getQuantity() - 1);
+                        successful.add(book.getTitle());
+                        LoggerService.log("Book purchased (cart): " + book.getTitle() + " by " + username);
+                        PurchaseLogger.logPurchase(username, book.getTitle());
+                    } else {
+                        failed.add(book.getTitle() + " (out of stock)");
+                    }
+                    break;
+                }
+            }
+
+            if (!found) {
+                failed.add(title + " (not found)");
+            }
+        }
+
+        System.out.println("\n=== Purchase Summary ===");
+        if (!successful.isEmpty()) {
+            System.out.println("Purchased:");
+            successful.forEach(s -> System.out.println("• " + s));
+        } else {
+            System.out.println("No successful purchases.");
+        }
+
+        if (!failed.isEmpty()) {
+            System.out.println("\nNot purchased:");
+            failed.forEach(f -> System.out.println("• " + f));
+        }
     }
 }

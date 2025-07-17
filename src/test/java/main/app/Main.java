@@ -4,22 +4,29 @@ package main.app;
 import main.model.Bookstore;
 import main.model.BookGenre;
 import main.model.Book;
+import main.model.User;
 import main.service.*;
 import main.service.BookUI;
 import main.service.BookFileHandler;
 import main.service.UserFileHandler;
 import main.service.EmployeeFileHandler;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
 
+    public static User activeUser = null;
+
     public static void main(String[] args) {
 
         Bookstore bookstore = new Bookstore("Smart Bookstore");
+        User activeUser = null;
+
         bookstore.getBooks().addAll(BookFileHandler.loadBooks());
         bookstore.getUsers().addAll(UserFileHandler.loadUsers());
         bookstore.getEmployees().addAll(EmployeeFileHandler.loadEmployees());
+
 
 
         BookService bookService = new BookService(bookstore);
@@ -27,10 +34,11 @@ public class Main {
         EmployeeService employeeService = new EmployeeService(bookstore);
 
         Scanner scanner = new Scanner(System.in);
-        int option;
+        int option = -1;
 
         do {
             System.out.println("\n=== Bookstore Menu ===");
+            System.out.println("L. Login as existing user");
             System.out.println("1. Add Book");
             System.out.println("2. Display Books");
             System.out.println("3. Remove Book");
@@ -46,11 +54,38 @@ public class Main {
             System.out.println("13. View purchase history");
             System.out.println("14. View top-selling books");
             System.out.println("15. View all purchases (admin)");
+            System.out.println("16. View users who purchased a specific book");
+            System.out.println("17. Purchase multiple books (cart)");
             System.out.println("0. Exit");
             System.out.print("Choose option: ");
 
-            option = scanner.nextInt();
-            scanner.nextLine(); // flush newline
+            System.out.print("Choose option: ");
+            String rawInput = scanner.nextLine(); // čita kao string
+
+            if (rawInput.equalsIgnoreCase("L")) {
+                System.out.print("Enter username: ");
+                String inputUsername = scanner.nextLine();
+
+                Optional<User> user = bookstore.getUsers().stream()
+                        .filter(u -> u.getUsername().equalsIgnoreCase(inputUsername))
+                        .findFirst();
+
+                if (user.isPresent()) {
+                    activeUser = user.get();
+                    System.out.println("Logged in as: " + activeUser.getUsername());
+                } else {
+                    System.out.println("User not found.");
+                }
+
+                continue;
+            }
+
+            try {
+                option = Integer.parseInt(rawInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Try again.");
+                continue;
+            }
 
             switch (option) {
                 case 1:
@@ -143,6 +178,14 @@ public class Main {
 
                 case 15:
                     BookUI.showAllPurchases();
+                    break;
+
+                case 16:
+                    BookUI.showUsersWhoPurchasedBook();
+                    break;
+
+                case 17:
+                    BookUI.purchaseMultipleBooks(bookstore);
                     break;
 
                 case 0:

@@ -3,7 +3,9 @@ package main.service;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class PurchaseLogger {
 
@@ -100,6 +102,38 @@ public class PurchaseLogger {
             }
         } catch (IOException e) {
             System.out.println("Error reading purchases: " + e.getMessage());
+        }
+    }
+
+    public static void showUsersWhoPurchasedBook(String bookTitle) {
+        File file = new File(FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("No purchases recorded.");
+            return;
+        }
+
+        System.out.println("\n=== Users Who Purchased \"" + bookTitle + "\" ===");
+
+        Set<String> users = new HashSet<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(";");
+                if (parts.length == 3 && parts[1].equalsIgnoreCase(bookTitle)) {
+                    users.add(parts[0]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading purchases: " + e.getMessage());
+            return;
+        }
+
+        if (users.isEmpty()) {
+            System.out.println("No users found who purchased this book.");
+        } else {
+            for (String user : users) {
+                System.out.println("• " + user);
+            }
         }
     }
 }
