@@ -4,6 +4,9 @@ import main.model.Book;
 import main.model.BookGenre;
 import main.model.Bookstore;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 public class BookUI {
@@ -57,5 +60,54 @@ public class BookUI {
 
         bookstore.removeBook(title, author);
         LoggerService.log("Attempted to remove book: " + title);
+    }
+
+    public static void searchBooksByAuthor(Bookstore bookstore) {
+        System.out.print("Enter author name to search: ");
+        String author = scanner.nextLine();
+
+        boolean found = false;
+        for (Book book : bookstore.getBooks()) {
+            if (book.getAuthor().equalsIgnoreCase(author)) {
+                System.out.println(book);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No books found by that author.");
+        }
+    }
+
+    public static void sortBooks(Bookstore bookstore) {
+        System.out.println("Sort books by:");
+        System.out.println("1. Title (A-Z)");
+        System.out.println("2. Price (Low to High)");
+        System.out.println("3. Year (Newest First)");
+        System.out.print("Choose option: ");
+
+        int choice = Integer.parseInt(scanner.nextLine());
+
+        List<Book> books = new ArrayList<>(bookstore.getBooks());
+
+        switch (choice) {
+            case 1:
+                books.sort(Comparator.comparing(Book::getTitle, String.CASE_INSENSITIVE_ORDER));
+                break;
+            case 2:
+                books.sort(Comparator.comparingDouble(Book::getPrice));
+                break;
+            case 3:
+                books.sort(Comparator.comparingInt(Book::getYear).reversed());
+                break;
+            default:
+                System.out.println("Invalid option.");
+                return;
+        }
+
+        System.out.println("\n=== Sorted Books ===");
+        for (Book book : books) {
+            System.out.println(book);
+        }
     }
 }

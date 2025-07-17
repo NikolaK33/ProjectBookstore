@@ -4,6 +4,7 @@ import main.model.Bookstore;
 import main.model.BookGenre;
 import main.model.Book;
 import main.service.*;
+import main.service.BookUI;
 
 import java.util.Scanner;
 
@@ -31,6 +32,8 @@ public class Main {
             System.out.println("7. Add Employee");
             System.out.println("8. Display Employees");
             System.out.println("9. Remove Employee");
+            System.out.println("10. Search books by author");
+            System.out.println("11. Sort books");
             System.out.println("0. Exit");
             System.out.print("Choose option: ");
 
@@ -104,6 +107,14 @@ public class Main {
                     System.out.println("Enter employee ID to remove:");
                     String removeId = scanner.nextLine();
                     employeeService.removeEmployee(removeId);
+                    break;
+
+                case 10:
+                    BookUI.searchBooksByAuthor(bookstore);
+                    break;
+
+                case 11:
+                    BookUI.sortBooks(bookstore);
                     break;
 
                 case 0:
